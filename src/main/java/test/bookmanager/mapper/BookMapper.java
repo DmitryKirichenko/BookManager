@@ -2,7 +2,6 @@ package test.bookmanager.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import org.springframework.data.domain.Page;
 import test.bookmanager.dto.BookDto;
 import test.bookmanager.entity.Book;
 
