@@ -23,7 +23,7 @@ public class BookViewController {
             filter = new BookFilterDto(null, null, null, 10, 0);
         }
 
-        Page<BookDto> bookPage = bookService.getBooksPage(filter); // Метод вернёт Page<BookDto>
+        Page<BookDto> bookPage = bookService.getFilteredBooks(filter);
         model.addAttribute("books", bookPage.getContent());
         model.addAttribute("filter", filter);
         model.addAttribute("currentPage", bookPage.getNumber());

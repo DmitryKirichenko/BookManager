@@ -52,7 +52,7 @@ public class BookService {
         return bookMapper.toDtos(bookRepository.findAll());
     }
 
-    public Page<BookDto> getBooksPage(BookFilterDto filter) {
+    public Page<BookDto> getFilteredBooks(BookFilterDto filter) {
         Specification<Book> spec = BookSpecification.withFilter(filter);
 
         Pageable pageable = PageRequest.of(
