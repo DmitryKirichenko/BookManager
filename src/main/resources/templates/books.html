@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container mt-4">
+
+    <h1 class="mb-4">Список книг</h1>
+
+    <form class="row g-3 mb-4" method="get" th:action="@{/ui/books}">
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="title" placeholder="Название"
+                   th:value="${filter.title}">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="brand" placeholder="Бренд"
+                   th:value="${filter.brand}">
+        </div>
+        <div class="col-md-2">
+            <input type="number" class="form-control" name="year" placeholder="Год"
+                   th:value="${filter.year}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Фильтровать</button>
+        </div>
+        <div class="col-md-2">
+            <a th:href="@{/ui/books}" class="btn btn-secondary w-100">Сброс</a>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Код</th>
+            <th>Название</th>
+            <th>Год</th>
+            <th>Бренд</th>
+            <th>В наличии</th>
+            <th>Цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.vendorCode}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.year}"></td>
+            <td th:text="${book.brand}"></td>
+            <td th:text="${book.stock}"></td>
+            <td th:text="${book.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav th:if="${totalPages > 1}">
+        <ul class="pagination justify-content-center mt-4">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/ui/books(pageNumber=${currentPage - 1}, title=${filter.title}, brand=${filter.brand}, year=${filter.year})}">
+                    Назад
+                </a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link"
+                   th:href="@{/ui/books(pageNumber=${i}, title=${filter.title}, brand=${filter.brand}, year=${filter.year})}"
+                   th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/ui/books(pageNumber=${currentPage + 1}, title=${filter.title}, brand=${filter.brand}, year=${filter.year})}">
+                    Вперёд
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
